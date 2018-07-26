@@ -16,7 +16,7 @@ class Dog
         DB[:conn].execute(sql)
     end
 
-    def self.create(attributes)
+    def self.create(attributes) # name: "Ralph", breed: "lab"
         dog = self.new.tap do |dog|
             attributes.each {|key, value| dog.send("#{key}=", "#{value}")}
             dog.save
@@ -55,10 +55,6 @@ class Dog
     end
 
     def self.find_or_create_by(attributes)
-        # dog_from_db = Dog.find_or_create_by({name: 'teddy', breed: 'cockapoo'})
-        # find ->update
-        # not find => create
-
         sql = "SELECT * FROM dogs where name = ? and breed = ?"
         result = DB[:conn].execute(sql, attributes.values[0], attributes.values[1])
 
